@@ -27,24 +27,20 @@ class App extends Component {
     }
 }
 
-const TodoList = (props) => {
-    // the array of todos from App state are on the props object 
+const TodoList = (props) => { /* the array of todos from App state are on the props object */
+    // map thru the props.todos array to populate the <ul> with <TodoItems>
     return (
         <ul>
-            <TodoItems todos={props.todos}/>
+            {props.todos.map((todo, i) => (
+                <TodoItem key={i} todo={todo} />
+            ))}
         </ul>);
 };
 
-const TodoItems = (props) => {
-    // the array of todos from App state passed to TodoList are on the props object
-    const { todos } = props; // so you don't have to write 'props.todos'
+const TodoItem = (props) => { /* the array of todos from App state passed to TodoList are on the props object */
+    const { todo } = props; // so you don't have to write 'props.todo'
     
-    return (
-        <div>
-            {todos.map((todo, i) => <li key={i}>{todo}</li>)}
-        </div>
-        
-    );
+    return <li>{todo}</li>;
 };
 
 export default App;
