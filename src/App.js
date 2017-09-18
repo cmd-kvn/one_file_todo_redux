@@ -7,7 +7,7 @@ class App extends Component {
         super(props);
 
         this.state = {
-            todos: ['hi'],
+            todos: ['hi', 'bye'],
         };
     }
 
@@ -28,10 +28,11 @@ class App extends Component {
 }
 
 const TodoList = (props) => {
+    let listItems = props.todos.map((todo, i) => <li key={i}>{todo}</li>);   
     return (
         <ul>
-            {props.todos}
             {/* todos go in here */}
+            {listItems}
         </ul>);
 };
 
