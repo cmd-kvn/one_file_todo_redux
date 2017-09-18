@@ -6,7 +6,10 @@
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
-    "test": "mocha"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   },
   "repository": {
     "type": "git",
@@ -20,6 +23,11 @@
   "homepage": "https://github.com/cmd-kvn/one_file_todo_redux#readme",
   "devDependencies": {
     "eslint": "^4.7.0",
-    "mocha": "^3.5.3"
+    "mocha": "^3.5.3",
+    "react-scripts": "^1.0.13"
+  },
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
   }
 }
