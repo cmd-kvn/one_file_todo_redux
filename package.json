@@ -1,0 +1,25 @@
+{
+  "name": "one_file_todo_redux",
+  "version": "1.0.0",
+  "description": "Making a simple todo list with React then transforming it with Redux",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmd-kvn/one_file_todo_redux.git"
+  },
+  "author": "Kevin Wong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cmd-kvn/one_file_todo_redux/issues"
+  },
+  "homepage": "https://github.com/cmd-kvn/one_file_todo_redux#readme",
+  "devDependencies": {
+    "eslint": "^4.7.0",
+    "mocha": "^3.5.3"
+  }
+}
