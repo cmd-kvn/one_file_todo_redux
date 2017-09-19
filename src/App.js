@@ -61,9 +61,9 @@ const TodoList = (props) => { /* the array of todos and view string from App sta
 };
 
 const TodoItem = (props) => { /* the array of todos from App state passed to TodoList are on the props object */
-    const { todo } = props; // so you don't have to write 'props.todo'
+    const { todo, key } = props; // so you don't have to write 'props.[todo/key]'
 
-    return <li>{todo}</li>;
+    return <li key={key}>{todo}</li>;
 };
 
 const AddTodo = (props) => { /* the handleSubmit function from App is on the props object  */
