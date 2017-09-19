@@ -7,14 +7,14 @@ class App extends Component {
         super(props);
 
         this.state = {
-            todos: ['hi', 'bye'],
+            todos: [],
         };
         
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(input) {
-        this.setState(prevState => ({todos: prevState.todos.concat(input)}));
+        this.setState(prevState => ({todos: prevState.todos.concat({todo: input, completed: false})}));
     }
 
     render() {
@@ -39,7 +39,7 @@ const TodoList = (props) => { /* the array of todos from App state are on the pr
     return (
         <ul>
             {props.todos.map((todo, i) => (
-                <TodoItem key={i} todo={todo} />
+                <TodoItem key={i} todo={todo.todo} />
             ))}
         </ul>
     );
