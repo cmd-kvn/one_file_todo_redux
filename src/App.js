@@ -33,7 +33,7 @@ class App extends Component {
                 <p className="App-intro">
                     Let's make a todo list
                 </p>
-                <TodoList todos={this.state.todos} />
+                <TodoList todos={this.state.todos} view={this.state.view} />
                 <AddTodo handleSubmit={this.handleSubmit} />
                 <Footer handleViewChange={this.handleViewChange} />
             </div>
@@ -41,13 +41,21 @@ class App extends Component {
     }
 }
 
-const TodoList = (props) => { /* the array of todos from App state are on the props object */
+const TodoList = (props) => { /* the array of todos and view string from App state are on the props object */
+    let todoListItems = props.todos.map((todo, i) => {
+        if(props.view === 'ALL') return <TodoItem key={i} todo={todo.todo} />;
+        else if (props.view === 'ACTIVE') {
+            if(todo.completed === false) return <TodoItem key={i} todo={todo.todo} />;
+        }
+        else if (props.view === 'COMPLETED') {
+            if(todo.completed === true) return <TodoItem key={i} todo={todo.todo} />;
+        }
+    });
+
     return (
         <ul>
-            {/* map thru the props.todos array to populate the <ul> with <TodoItems> */}
-            {props.todos.map((todo, i) => (
-                <TodoItem key={i} todo={todo.todo} />
-            ))}
+            {/* the list items based on what view is set in the state */}
+            {todoListItems}
         </ul>
     );
 };
