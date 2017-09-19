@@ -92,9 +92,9 @@ const Footer = (props) => { /* the handleViewChange function from App is on the 
             {/* 
                 data-[customize this] is an custom attribute on the event object.
                 It can be referenced by event.target.dataset.[customized name].
-                In this case value='VALUE' and event.target.value also works
+                In this case value='VALUE' and event.target.value (in handleViewChange) also works
             */}
-            <button type='submit' data-filter='ALL' onClick={props.handleViewChange}>  All  </button>
+            <button type='submit' data-filter='ALL' onClick={props.handleViewChange}>All</button>
             {'  '}
             <button type='submit' data-filter='ACTIVE' onClick={props.handleViewChange}>Active</button>
             {'  '}
