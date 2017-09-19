@@ -43,12 +43,12 @@ class App extends Component {
 
 const TodoList = (props) => { /* the array of todos and view string from App state are on the props object */
     let todoListItems = props.todos.map((todo, i) => {
-        if(props.view === 'ALL') return <TodoItem key={i} todo={todo.todo} />;
+        if(props.view === 'ALL') return <TodoItem key={i} todo={todo.todo} completed={todo.completed} />;
         else if (props.view === 'ACTIVE') {
-            if(todo.completed === false) return <TodoItem key={i} todo={todo.todo} />;
+            if(todo.completed === false) return <TodoItem key={i} todo={todo.todo} completed={todo.completed} />;
         }
         else if (props.view === 'COMPLETED') {
-            if(todo.completed === true) return <TodoItem key={i} todo={todo.todo} />;
+            if(todo.completed === true) return <TodoItem key={i} todo={todo.todo} completed={todo.completed} />;
         }
     });
 
@@ -61,9 +61,17 @@ const TodoList = (props) => { /* the array of todos and view string from App sta
 };
 
 const TodoItem = (props) => { /* the array of todos from App state passed to TodoList are on the props object */
-    const { todo, key } = props; // so you don't have to write 'props.[todo/key]'
+    const { key, todo, completed } = props; // so you don't have to write 'props.[todo/key/completed]'
 
-    return <li key={key}>{todo}</li>;
+    return (
+        <li 
+            key={key}
+            style={{
+                textDecoration: completed ? 'line-through' : 'none'
+            }}
+        >
+            {todo}
+        </li>);
 };
 
 const AddTodo = (props) => { /* the handleSubmit function from App is on the props object  */
