@@ -8,13 +8,19 @@ class App extends Component {
 
         this.state = {
             todos: [],
+            view: 'ALL',
         };
         
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleViewChange = this.handleViewChange.bind(this);
     }
 
     handleSubmit(input) {
         this.setState(prevState => ({todos: prevState.todos.concat({todo: input, completed: false})}));
+    }
+
+    handleViewChange(e) {
+        this.setState({view: e.target.dataset.filter});
     }
 
     render() {
@@ -29,15 +35,16 @@ class App extends Component {
                 </p>
                 <TodoList todos={this.state.todos} />
                 <AddTodo handleSubmit={this.handleSubmit} />
+                <Footer handleViewChange={this.handleViewChange} />
             </div>
         );
     }
 }
 
 const TodoList = (props) => { /* the array of todos from App state are on the props object */
-    // map thru the props.todos array to populate the <ul> with <TodoItems>
     return (
         <ul>
+            {/* map thru the props.todos array to populate the <ul> with <TodoItems> */}
             {props.todos.map((todo, i) => (
                 <TodoItem key={i} todo={todo.todo} />
             ))}
@@ -67,6 +74,24 @@ const AddTodo = (props) => { /* the handleSubmit function from App is on the pro
                 <button type="submit">Add Todo</button>
             </form>
         </div>
+    );
+};
+
+const Footer = (props) => { /* the handleViewChange function from App is on the props object */
+    return (
+        <p>
+            Show: {'  '}
+            {/* 
+                data-[customize this] is an custom attribute on the event object.
+                It can be referenced by event.target.dataset.[customized name].
+                In this case value='VALUE' and event.target.value also works
+            */}
+            <button type='submit' data-filter='ALL' onClick={props.handleViewChange}>  All  </button>
+            {'  '}
+            <button type='submit' data-filter='ACTIVE' onClick={props.handleViewChange}>Active</button>
+            {'  '}
+            <button type='submit' data-filter='COMPLETED' onClick={props.handleViewChange}>Completed</button>
+        </p>
     );
 };
 
