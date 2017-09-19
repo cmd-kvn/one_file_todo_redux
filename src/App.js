@@ -75,18 +75,18 @@ const TodoItem = (props) => { /* the array of todos from App state passed to Tod
 };
 
 const AddTodo = (props) => { /* the handleSubmit function from App is on the props object  */
-    let input;
+    let inputText;
 
     return (
         <div>
             <form 
                 onSubmit={e => {
                     e.preventDefault();
-                    if(!input.value.trim()) return;
-                    props.handleSubmit(input.value);
-                    input.value = '';
+                    if(!inputText.value.trim()) return;
+                    props.handleSubmit(inputText.value);
+                    inputText.value = '';
                 }}>
-                <input ref={node => {input = node;}}/>
+                <input ref={node => {inputText = node;}}/>
                 <button type="submit">Add Todo</button>
             </form>
         </div>
