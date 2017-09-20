@@ -53,17 +53,17 @@ class App extends Component {
     }
 }
 
-const TodoList = (props) => { /* state.todos, state.view, and handleTodoClick from App are on the props object */
-    let todoListItems = props.todos.map(todo => {
-        if(props.view === 'ALL') {
-            return <TodoItem _id={todo._id} todo={todo.todo} completed={todo.completed} onClick={props.handleTodoClick} />;
-        } else if (props.view === 'ACTIVE') {
+const TodoList = ({ todos, view, handleTodoClick }) => { /* state.[todos/view] and handleTodoClick from App are on the props object */
+    let todoListItems = todos.map(todo => {
+        if(view === 'ALL') {
+            return <TodoItem _id={todo._id} todo={todo.todo} completed={todo.completed} onClick={handleTodoClick} />;
+        } else if (view === 'ACTIVE') {
             if(todo.completed === false) {
-                return <TodoItem _id={todo._id} todo={todo.todo} completed={todo.completed} onClick={props.handleTodoClick} />;
+                return <TodoItem _id={todo._id} todo={todo.todo} completed={todo.completed} onClick={handleTodoClick} />;
             }
-        } else if (props.view === 'COMPLETED') {
+        } else if (view === 'COMPLETED') {
             if(todo.completed === true) {
-                return <TodoItem _id={todo._id} todo={todo.todo} completed={todo.completed} onClick={props.handleTodoClick} />;
+                return <TodoItem _id={todo._id} todo={todo.todo} completed={todo.completed} onClick={handleTodoClick} />;
             }
         }
     });
@@ -76,9 +76,7 @@ const TodoList = (props) => { /* state.todos, state.view, and handleTodoClick fr
     );
 };
 
-const TodoItem = (props) => { /* state.todos.[_id/todo/completed] and handleTodoClick from TodoList via App are on the props object */
-    const { _id, todo, completed, onClick } = props; // so you don't have to write 'props.[todo/_id/completed/onClick]'
-
+const TodoItem = ({ _id, todo, completed, onClick }) => { /* state.todos.[_id/todo/completed] and handleTodoClick from TodoList via App are on the props object */
     return (
         <li
             key={_id}
@@ -92,7 +90,7 @@ const TodoItem = (props) => { /* state.todos.[_id/todo/completed] and handleTodo
     );
 };
 
-const AddTodo = (props) => { /* the handleSubmit function from App is on the props object  */
+const AddTodo = ({ handleSubmit }) => { /* the handleSubmit function from App is on the props object  */
     let inputText;
 
     return (
@@ -101,7 +99,7 @@ const AddTodo = (props) => { /* the handleSubmit function from App is on the pro
                 onSubmit={e => {
                     e.preventDefault();
                     if(!inputText.value.trim()) return;
-                    props.handleSubmit(inputText.value);
+                    handleSubmit(inputText.value);
                     inputText.value = '';
                 }}>
                 <input ref={node => {inputText = node;}}/>
@@ -111,12 +109,12 @@ const AddTodo = (props) => { /* the handleSubmit function from App is on the pro
     );
 };
 
-const Footer = (props) => { /* the handleViewChange and handleClearCompleted functions from App is on the props object */
+const Footer = ({ handleClearCompleted, handleViewChange }) => { /* the handleViewChange and handleClearCompleted functions from App is on the props object */
     return (
         <p>
             <button 
                 type='submit'
-                onClick={props.handleClearCompleted}
+                onClick={handleClearCompleted}
             >
                 Clear completed
             </button>
@@ -126,11 +124,11 @@ const Footer = (props) => { /* the handleViewChange and handleClearCompleted fun
                 It can be referenced by event.target.dataset.[customized name].
                 In this case value='VALUE' and event.target.value (in handleViewChange) also works
             */}
-            <button type='submit' data-filter='ALL' onClick={props.handleViewChange}>All</button>
+            <button type='submit' data-filter='ALL' onClick={handleViewChange}>All</button>
             {'  '}
-            <button type='submit' data-filter='ACTIVE' onClick={props.handleViewChange}>Active</button>
+            <button type='submit' data-filter='ACTIVE' onClick={handleViewChange}>Active</button>
             {'  '}
-            <button type='submit' data-filter='COMPLETED' onClick={props.handleViewChange}>Completed</button>
+            <button type='submit' data-filter='COMPLETED' onClick={handleViewChange}>Completed</button>
         </p>
     );
 };
