@@ -24,9 +24,11 @@ class App extends Component {
         this.setState({view: e.target.dataset.filter});
     }
 
-    handleTodoClick(todoID){
-        // this.setState({});
-        console.log(todoID);
+    handleTodoClick(todoID, complete){
+        this.setState(prevState => ({todos: prevState.todos.map(todo => {
+            if (todo._id === todoID) return {completed: !complete, todo: todo.todo, _id: todo._id};
+            else return todo;
+        })}));
     }
 
     render() {
@@ -34,13 +36,10 @@ class App extends Component {
             <div className="App">
                 <div className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
-                    <h2>Welcome to React</h2>
+                    <h2>Let's make a todo list</h2>
                 </div>
-                <p className="App-intro">
-                    Let's make a todo list
-                </p>
-                <TodoList todos={this.state.todos} view={this.state.view} handleTodoClick={this.handleTodoClick} />
                 <AddTodo handleSubmit={this.handleSubmit} />
+                <TodoList todos={this.state.todos} view={this.state.view} handleTodoClick={this.handleTodoClick} />
                 <Footer handleViewChange={this.handleViewChange} />
             </div>
         );
@@ -79,7 +78,7 @@ const TodoItem = (props) => { /* state.todos.[_id/todo/completed] and handleTodo
             style={{
                 textDecoration: completed ? 'line-through' : 'none'
             }}
-            onClick={() => onClick(_id)}
+            onClick={() => onClick(_id, completed)}
         >
             {todo}
         </li>
