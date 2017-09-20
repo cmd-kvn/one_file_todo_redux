@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
 
+import AddTodo from './components/AddTodo';
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -106,27 +108,6 @@ TodoItem.propTypes = {
     onClick: PropTypes.func.isRequired,
 };
 
-const AddTodo = ({ handleSubmit }) => { /* the handleSubmit function from App is on the props object  */
-    let inputText;
-
-    return (
-        <div>
-            <form 
-                onSubmit={e => {
-                    e.preventDefault();
-                    if(!inputText.value.trim()) return;
-                    handleSubmit(inputText.value);
-                    inputText.value = '';
-                }}>
-                <input ref={node => {inputText = node;}}/>
-                <button type="submit">Add Todo</button>
-            </form>
-        </div>
-    );
-};
-AddTodo.propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
-};
 
 const Footer = ({ handleClearCompleted, handleViewChange }) => { /* the handleViewChange and handleClearCompleted functions from App is on the props object */
     return (
