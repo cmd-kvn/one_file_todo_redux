@@ -14,6 +14,7 @@ class App extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleViewChange = this.handleViewChange.bind(this);
         this.handleTodoClick = this.handleTodoClick.bind(this);
+        this.handleClearCompleted = this.handleClearCompleted.bind(this);
     }
 
     handleSubmit(input) {
@@ -31,6 +32,12 @@ class App extends Component {
         })}));
     }
 
+    handleClearCompleted(){
+        this.setState(prevState => ({todos: prevState.todos.filter(todo => {
+            return todo.completed === false;
+        })}));
+    }
+
     render() {
         return (
             <div className="App">
@@ -40,7 +47,7 @@ class App extends Component {
                 </div>
                 <AddTodo handleSubmit={this.handleSubmit} />
                 <TodoList todos={this.state.todos} view={this.state.view} handleTodoClick={this.handleTodoClick} />
-                <Footer handleViewChange={this.handleViewChange} />
+                <Footer handleViewChange={this.handleViewChange} handleClearCompleted={this.handleClearCompleted} />
             </div>
         );
     }
@@ -104,10 +111,16 @@ const AddTodo = (props) => { /* the handleSubmit function from App is on the pro
     );
 };
 
-const Footer = (props) => { /* the handleViewChange function from App is on the props object */
+const Footer = (props) => { /* the handleViewChange and handleClearCompleted functions from App is on the props object */
     return (
         <p>
-            Show: {'  '}
+            <button 
+                type='submit'
+                onClick={props.handleClearCompleted}
+            >
+                Clear completed
+            </button>
+            {'  '} Show: {'  '}
             {/* 
                 data-[customize this] is an custom attribute on the event object.
                 It can be referenced by event.target.dataset.[customized name].
