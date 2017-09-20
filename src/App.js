@@ -13,14 +13,20 @@ class App extends Component {
         
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleViewChange = this.handleViewChange.bind(this);
+        this.handleTodoClick = this.handleTodoClick.bind(this);
     }
 
     handleSubmit(input) {
-        this.setState(prevState => ({todos: prevState.todos.concat({todo: input, completed: false})}));
+        this.setState(prevState => ({todos: prevState.todos.concat({todo: input, completed: false, _id: Date.now()})}));
     }
 
     handleViewChange(e) {
         this.setState({view: e.target.dataset.filter});
+    }
+
+    handleTodoClick(todoID){
+        // this.setState({});
+        console.log(todoID);
     }
 
     render() {
@@ -33,7 +39,7 @@ class App extends Component {
                 <p className="App-intro">
                     Let's make a todo list
                 </p>
-                <TodoList todos={this.state.todos} view={this.state.view} />
+                <TodoList todos={this.state.todos} view={this.state.view} handleTodoClick={this.handleTodoClick} />
                 <AddTodo handleSubmit={this.handleSubmit} />
                 <Footer handleViewChange={this.handleViewChange} />
             </div>
@@ -41,14 +47,18 @@ class App extends Component {
     }
 }
 
-const TodoList = (props) => { /* the array of todos and view string from App state are on the props object */
-    let todoListItems = props.todos.map((todo, i) => {
-        if(props.view === 'ALL') return <TodoItem key={i} todo={todo.todo} completed={todo.completed} />;
-        else if (props.view === 'ACTIVE') {
-            if(todo.completed === false) return <TodoItem key={i} todo={todo.todo} completed={todo.completed} />;
-        }
-        else if (props.view === 'COMPLETED') {
-            if(todo.completed === true) return <TodoItem key={i} todo={todo.todo} completed={todo.completed} />;
+const TodoList = (props) => { /* state.todos, state.view, and handleTodoClick from App are on the props object */
+    let todoListItems = props.todos.map(todo => {
+        if(props.view === 'ALL') {
+            return <TodoItem _id={todo._id} todo={todo.todo} completed={todo.completed} onClick={props.handleTodoClick} />;
+        } else if (props.view === 'ACTIVE') {
+            if(todo.completed === false) {
+                return <TodoItem _id={todo._id} todo={todo.todo} completed={todo.completed} onClick={props.handleTodoClick} />;
+            }
+        } else if (props.view === 'COMPLETED') {
+            if(todo.completed === true) {
+                return <TodoItem _id={todo._id} todo={todo.todo} completed={todo.completed} onClick={props.handleTodoClick} />;
+            }
         }
     });
 
@@ -60,18 +70,20 @@ const TodoList = (props) => { /* the array of todos and view string from App sta
     );
 };
 
-const TodoItem = (props) => { /* the array of todos from App state passed to TodoList are on the props object */
-    const { key, todo, completed } = props; // so you don't have to write 'props.[todo/key/completed]'
+const TodoItem = (props) => { /* state.todos.[_id/todo/completed] and handleTodoClick from TodoList via App are on the props object */
+    const { _id, todo, completed, onClick } = props; // so you don't have to write 'props.[todo/_id/completed/onClick]'
 
     return (
-        <li 
-            key={key}
+        <li
+            key={_id}
             style={{
                 textDecoration: completed ? 'line-through' : 'none'
             }}
+            onClick={() => onClick(_id)}
         >
             {todo}
-        </li>);
+        </li>
+    );
 };
 
 const AddTodo = (props) => { /* the handleSubmit function from App is on the props object  */
