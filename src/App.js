@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
 
@@ -75,6 +76,15 @@ const TodoList = ({ todos, view, handleTodoClick }) => { /* state.[todos/view] a
         </ul>
     );
 };
+TodoList.propTypes = {
+    todos: PropTypes.arrayOf(PropTypes.shape({
+        _id: PropTypes.number.isRequired,
+        todo: PropTypes.string.isRequired,
+        completed: PropTypes.bool.isRequired,
+    })).isRequired,
+    view: PropTypes.string.isRequired,
+    handleTodoClick: PropTypes.func.isRequired,
+};
 
 const TodoItem = ({ _id, todo, completed, onClick }) => { /* state.todos.[_id/todo/completed] and handleTodoClick from TodoList via App are on the props object */
     return (
@@ -88,6 +98,12 @@ const TodoItem = ({ _id, todo, completed, onClick }) => { /* state.todos.[_id/to
             {todo}
         </li>
     );
+};
+TodoItem.propTypes = {
+    _id: PropTypes.number.isRequired,
+    todo: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired,
 };
 
 const AddTodo = ({ handleSubmit }) => { /* the handleSubmit function from App is on the props object  */
@@ -107,6 +123,9 @@ const AddTodo = ({ handleSubmit }) => { /* the handleSubmit function from App is
             </form>
         </div>
     );
+};
+AddTodo.propTypes = {
+    handleSubmit: PropTypes.func.isRequired,
 };
 
 const Footer = ({ handleClearCompleted, handleViewChange }) => { /* the handleViewChange and handleClearCompleted functions from App is on the props object */
@@ -131,6 +150,10 @@ const Footer = ({ handleClearCompleted, handleViewChange }) => { /* the handleVi
             <button type='submit' data-filter='COMPLETED' onClick={handleViewChange}>Completed</button>
         </p>
     );
+};
+Footer.propTypes = {
+    handleClearCompleted: PropTypes.func.isRequired,
+    handleViewChange: PropTypes.func.isRequired,
 };
 
 export default App;
