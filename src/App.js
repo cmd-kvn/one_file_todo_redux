@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import AddTodo from './components/AddTodo';
+import TodoItem from './components/TodoItem';
 
 class App extends Component {
     constructor(props) {
@@ -87,27 +88,6 @@ TodoList.propTypes = {
     view: PropTypes.string.isRequired,
     handleTodoClick: PropTypes.func.isRequired,
 };
-
-const TodoItem = ({ _id, todo, completed, onClick }) => { /* state.todos.[_id/todo/completed] and handleTodoClick from TodoList via App are on the props object */
-    return (
-        <li
-            key={_id}
-            style={{
-                textDecoration: completed ? 'line-through' : 'none'
-            }}
-            onClick={() => onClick(_id, completed)}
-        >
-            {todo}
-        </li>
-    );
-};
-TodoItem.propTypes = {
-    _id: PropTypes.number.isRequired,
-    todo: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired,
-    onClick: PropTypes.func.isRequired,
-};
-
 
 const Footer = ({ handleClearCompleted, handleViewChange }) => { /* the handleViewChange and handleClearCompleted functions from App is on the props object */
     return (
