@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
 
+import AddTodo from './components/AddTodo';
+import TodoList from './components/TodoList';
+import Footer from './components/Footer';
+
 class App extends Component {
     constructor(props) {
         super(props);
